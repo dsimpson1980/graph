@@ -50,3 +50,12 @@ TEST_CASE("Testing NodeClip") {
     }
 
 }
+
+TEST_CASE("Testing NodeAbs") {
+    Node<float> test_node(2, float(-1.0));
+
+    NodeAbs<float> test_node_abs(test_node);
+    test_node_abs.evaluate();
+    REQUIRE(test_node_abs.timestamp == 2);
+    REQUIRE(test_node_abs.value == 1.0);
+}
