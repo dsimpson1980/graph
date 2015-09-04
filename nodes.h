@@ -40,11 +40,10 @@ public:
 
 template <typename T>
 class NodeClipLower : public OneSidedNode<T> {
-private:
+public:
     using OneSidedNode<T>::rhs;
     using OneSidedNode<T>::timestamp;
     using OneSidedNode<T>::value;
-public:
     float lower;
     NodeClipLower(Node<T> &rhs, float lower) : OneSidedNode<T>(rhs), lower(lower) {};
     pair<long, T> evaluate() {
@@ -60,11 +59,10 @@ public:
 
 template <typename T>
 class NodeClipUpper : public OneSidedNode<T> {
-private:
+public:
     using OneSidedNode<T>::rhs;
     using OneSidedNode<T>::timestamp;
     using OneSidedNode<T>::value;
-public:
     float upper;
     NodeClipUpper(Node<T> &rhs, T upper) : OneSidedNode<T>(rhs), upper(upper) {};
     pair<long, T> evaluate() {
@@ -80,11 +78,10 @@ public:
 
 template <typename T>
 class NodeClip : public OneSidedNode<T> {
-private:
+public:
     using OneSidedNode<T>::rhs;
     using OneSidedNode<T>::timestamp;
     using OneSidedNode<T>::value;
-public:
     float upper, lower;
     NodeClip(Node<T> &rhs, T lower, T upper) : OneSidedNode<T>(rhs), lower(lower), upper(upper) {};
     pair<long, T> evaluate() {
@@ -101,11 +98,10 @@ public:
 
 template <typename T>
 class NodeAbs : public OneSidedNode<T> {
-private:
+public:
     using OneSidedNode<T>::rhs;
     using OneSidedNode<T>::timestamp;
     using OneSidedNode<T>::value;
-public:
     NodeAbs(Node<T> &rhs) : OneSidedNode<T>(rhs) {};
     pair<long, T> evaluate() {
         pair<long, T> eval = rhs.evaluate();
@@ -206,12 +202,11 @@ public:
 
 template <typename T>
 class NodeOuterProduct : public TwoSidedNode<T> {
-private:
+public:
     using TwoSidedNode<T>::lhs;
     using TwoSidedNode<T>::rhs;
     using TwoSidedNode<T>::timestamp;
     using TwoSidedNode<T>::value;
-public:
     NodeOuterProduct(Node<T> &lhs, Node<T> &rhs) : TwoSidedNode<T>(lhs, rhs) {};
     pair<long, T> evaluate() {
         pair<long, T> lhs_eval = lhs.evaluate();
