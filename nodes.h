@@ -229,16 +229,16 @@ private:
 public:
     int halfLife, meanSeedPeriod, meanSeedOverride;
     int counter = 0;
-    float filter = NULL;
+    float filter = 0;
     T cumSum = 0.0;
-    T value = NULL, timestamp = NULL, gamma;
+    T value = 0, timestamp = 0, gamma;
     using OneSidedNode<T>::rhs;
     NodeSmooth(Node<T> &rhs, int halfLife, int meanSeedPeriod, int meanSeedOverride) : OneSidedNode<T>(rhs), halfLife(halfLife), meanSeedPeriod(meanSeedPeriod), meanSeedOverride(meanSeedOverride), gamma(pow(0.5, 1.0 / float(halfLife))) {};
     pair<long, T> evaluate() {
         pair<long, T> rhsEval = rhs.evaluate();
         if (rhsEval.first != timestamp) {
             timestamp = rhsEval.first;
-            if (filter == NULL) {
+            if (filter == 0) {
                 cumSum += rhsEval.second;
                 counter += 1;
                 if (counter == meanSeedPeriod) {
