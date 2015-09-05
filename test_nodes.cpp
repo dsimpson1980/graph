@@ -59,3 +59,19 @@ TEST_CASE("Testing NodeAbs") {
     REQUIRE(test_node_abs.timestamp == 2);
     REQUIRE(test_node_abs.value == 1.0);
 }
+
+TEST_CASE("Testing MockDataSource") {
+    vector<long> timestamps;
+    vector<float> values;
+    for (long i = 0; i <= 10; i++) {
+        timestamps.push_back(i);
+        values.push_back(float(i * 10));
+    }
+    MockDataSource<float> mockdatasource(timestamps, values);
+    for (int i = 0; i <= 10; i++) {
+        mockdatasource.evaluate();
+        mockdatasource.next();
+        REQUIRE(mockdatasource.timestamp == i);
+        REQUIRE(mockdatasource.value == float(i * 10));
+    }
+}

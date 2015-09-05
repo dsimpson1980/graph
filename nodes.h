@@ -251,12 +251,16 @@ public:
 template <typename T>
 class MockDataSource : public Node<T> {
 public:
+    using Node<T>::timestamp;
+    using Node<T>::value;
     vector<long> timestamps;
     vector<T> values;
     int count = 0;
     MockDataSource(vector<long> _timestamps, vector<T> _values) {timestamps = _timestamps, values = _values;};
     pair<long, T> evaluate() {
-        return make_pair(timestamps[count], values[count]);
+        timestamp = timestamps[count];
+        value = values[count];
+        return make_pair(timestamp, value);
     }
     void next() {
         if (count == sizeof(timestamps)) {
