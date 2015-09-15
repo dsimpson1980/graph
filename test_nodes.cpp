@@ -76,7 +76,7 @@ TEST_CASE("Testing MockDataSource") {
     }
 }
 
-TEST_CASE("Testing Nodediff") {
+TEST_CASE("Testing NodeDiff") {
     vector<long> timestamps;
     vector<float> values;
     vector<float> check_values;
@@ -92,6 +92,26 @@ TEST_CASE("Testing Nodediff") {
         pair<long, float> eval = nodediff.evaluate();
         REQUIRE(eval.first == i);
         REQUIRE(eval.second == check_values[i]);
+        mockDataSource.next();
+    }
+}
+
+TEST_CASE("Testing NodePDiff") {
+    vector<long> timestamps;
+    vector<float> values;
+    vector<float> check_values;
+    for (long i = 1; i <= 10; i++) {
+        timestamps.push_back(i);
+        values.push_back(float(i * 10));
+        check_values.push_back(i < 5 ? 0 : float(i) / float(i - 4) - float(1));
+    }
+    MockDataSource<float> mockDataSource(timestamps, values);
+    NodePDiff<float> nodepdiff(mockDataSource, 5);
+    for (int i = 1; i <= 10; i++) {
+        mockDataSource.evaluate();
+        pair<long, float> eval = nodepdiff.evaluate();
+        REQUIRE(eval.first == i);
+        REQUIRE(eval.second == check_values[i - 1]);
         mockDataSource.next();
     }
 }
