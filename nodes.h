@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <queue>
+#include <cmath>
 //#include <ql/quantlib.hpp>
 using namespace std;
 
@@ -154,6 +155,7 @@ public:
     using OneSidedNode<T>::timestamp;
     int maxlen;
     float (*op)(MaxDeque<float>);
+    T value = 0;
     MaxDeque<T> maxdeque = MaxDeque<T>(maxlen);
     NodeDeque() = default;
     NodeDeque(Node<T> &rhs, int maxlen, float (*op)(MaxDeque<float>)) : OneSidedNode<T>(rhs), maxlen(maxlen), op(op) {};
@@ -163,7 +165,10 @@ public:
             timestamp = eval.first;
             maxdeque.push_back(eval.second);
         }
-        return make_pair(this->timestamp, op(maxdeque));
+        if (maxdeque.size() == maxlen) {
+            value = op(maxdeque);
+        }
+        return make_pair(this->timestamp, value);
     }
 };
 

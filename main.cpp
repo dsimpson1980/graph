@@ -65,18 +65,6 @@ int main() {
     }
     MockDataSource<float> mockdatasource(timestamps, values);
     cout << &mockdatasource << "\n";
-//    NodeAbs<float> node_abs(mockdatasource);
-//    NodeClipUpper<float> node_clip_upper(node_abs, float(50));
-//    for (int i=0; i<=5; i++) {
-//        pair<long, float> eval = mockdatasource.evaluate();
-//        pair<long, float> eval_abs = node_abs.evaluate();
-//        pair<long, float> eval_clip = node_clip_upper.evaluate();
-//        cout << eval.first << "," << eval.second << " " << eval_abs.first << "," << eval_abs.second << " " << eval_clip.first << "," << eval_clip.second << "\n";
-//        mockdatasource.next();
-//    }
-//    NodeOuterProduct<float> node_outer_product(mockdatasource, mockdatasource);
-//    pair<long, float> node_outer_eval = node_outer_product.evaluate();
-//    cout << node_outer_eval.first << "," << node_outer_eval.second << "\n";
     cout << "\n";
     MockDataSource<float> mockdatasource2(timestamps, values);
     NodeDiff<float> nodediff(mockdatasource2, 5);

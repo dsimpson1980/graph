@@ -75,3 +75,23 @@ TEST_CASE("Testing MockDataSource") {
         REQUIRE(mockdatasource.value == float(i * 10));
     }
 }
+
+TEST_CASE("Testing Nodediff") {
+    vector<long> timestamps;
+    vector<float> values;
+    vector<float> check_values;
+    for (long i = 0; i <= 10; i++) {
+        timestamps.push_back(i);
+        values.push_back(float(i * 10));
+        check_values.push_back(i < 4 ? 0 : 40);
+    }
+    MockDataSource<float> mockDataSource(timestamps, values);
+    NodeDiff<float> nodediff(mockDataSource, 5);
+    for (int i = 0; i <= 10; i++) {
+        mockDataSource.evaluate();
+        pair<long, float> eval = nodediff.evaluate();
+        REQUIRE(eval.first == i);
+        REQUIRE(eval.second == check_values[i]);
+        mockDataSource.next();
+    }
+}
